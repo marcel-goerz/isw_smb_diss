@@ -14,6 +14,9 @@
 \setabbreviationstyle[acronym]{long-hyphen-short-hyphen}
 \glssetcategoryattribute{\acronymtype}{markwords}{true}
 
+\setabbreviationstyle[acronym]{long-short}
+
+
 \newglossarystyle{symbunitlong}{%
 	\renewenvironment{theglossary}%
 		{\begin{longtable}{@{}lcp{0.6\textwidth}@{}}}%
@@ -39,6 +42,19 @@
 	\BeforeBeginEnvironment{theglossary}{\begin{multicols}{2}}%
 	\AfterEndEnvironment{theglossary}{\end{multicols}}%
 } % <-- added closing brace
+
+% Custom glossary style with adjustable column widths and bold abbreviations
+\newglossarystyle{mylong}{%
+	\setglossarystyle{long}%
+	\renewenvironment{theglossary}%
+		{\begin{longtable}[l]{@{}p{\dimexpr 2cm-\tabcolsep}p{0.8\hsize}}}% <-- change the value here
+		{\end{longtable}}%
+	\renewcommand*{\glossentry}[2]{%
+		\glsentryitem{##1}%
+		\textbf{\glstarget{##1}{\glossentryname{##1}}} & % Make abbreviation bold
+		\glossentrydesc{##1}\glspostdescription\space ##2\tabularnewline
+	}%
+}
 
 \makeglossaries
 
